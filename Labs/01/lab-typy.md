@@ -176,7 +176,7 @@ instance Misty (State s) where
 
 źródło:
 
-http://blog.tmorris.net/20-intermediate-haskell-exercises/
+http://blog.tmorris.net/posts/20-intermediate-haskell-exercises/
 
 # Klasy wieloparametrowe
 
