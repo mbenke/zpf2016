@@ -242,11 +242,10 @@ threetrees <span class="fu">=</span> sequence [arbitrary, arbitrary, arbitrary]<
 <div id="ograniczanie-rozmiaru" class="slide section level1">
 <h1>Ograniczanie rozmiaru</h1>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- generator bierze pożądany rozmiar i StdGen i daje a</span>
-<span class="kw">newtype</span> <span class="dt">Gen</span> a
-b  <span class="fu">=</span> <span class="dt">Gen</span> (<span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">StdGen</span> <span class="ot">-&gt;</span> a)
+<span class="kw">newtype</span> <span class="dt">Gen</span> a  <span class="fu">=</span> <span class="dt">Gen</span> (<span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">StdGen</span> <span class="ot">-&gt;</span> a)
 
-<span class="ot">chooseInt1 ::</span> (<span class="dt">Int</span>,<span class="dt">Int</span>) <span class="ot">-&gt;</span> <span class="dt">Gen</span> <span class="dt">Int</span>
-chooseInt1 bounds <span class="fu">=</span> <span class="dt">Gen</span> <span class="fu">$</span> \n r  <span class="ot">-&gt;</span> fst (randomR bounds r)
+<span class="ot">choose ::</span> <span class="dt">Random</span> a <span class="ot">=&gt;</span> (a, a) <span class="ot">-&gt;</span> <span class="dt">Gen</span> a
+choose bounds <span class="fu">=</span> (fst <span class="fu">.</span> randomR bounds) <span class="ot">`fmap`</span> rand
 
 <span class="ot">rand ::</span> <span class="dt">Gen</span> <span class="dt">StdGen</span>
 rand <span class="fu">=</span> <span class="dt">Gen</span> (\n r <span class="ot">-&gt;</span> r)
@@ -500,7 +499,7 @@ propCompAssoc f g h <span class="fu">=</span> (f <span class="fu">.</span> g) <s
 <ul>
 <li>Trzeba zdefiniować nowy typ (chyba, że już mamy)</li>
 </ul>
-<pre><code>data OrderedInts = OrderedInts [Int]
+<pre><code>newtype OrderedInts = OrderedInts [Int]
 
 prop_insert4 :: Int -&gt; OrderedInts -&gt; Bool
 prop_insert4  x (OrderedInts xs) = ordered (insert x xs)

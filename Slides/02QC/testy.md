@@ -271,11 +271,10 @@ jakie jest prawdopodobieństwo że generowanie 3 drzew się zatrzyma?
 
 ~~~~ {.haskell}
 -- generator bierze pożądany rozmiar i StdGen i daje a
-newtype Gen a
-b  = Gen (Int -> StdGen -> a)
+newtype Gen a  = Gen (Int -> StdGen -> a)
 
-chooseInt1 :: (Int,Int) -> Gen Int
-chooseInt1 bounds = Gen $ \n r  -> fst (randomR bounds r)
+choose :: Random a => (a, a) -> Gen a
+choose bounds = (fst . randomR bounds) <$> rand
 
 rand :: Gen StdGen
 rand = Gen (\n r -> r)

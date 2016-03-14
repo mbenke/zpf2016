@@ -361,7 +361,7 @@ to $\Gamma \vdash e :: \forall a.t$
 <span class="ot">    pure ::</span> forall (<span class="ot">a ::</span> <span class="fu">*</span>)<span class="fu">.</span>a <span class="ot">-&gt;</span> f a</code></pre></li>
 <li><p>Występują też bardziej złożone rodzaje, np. dla transformatorów monad:</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> <span class="dt">MonadTrans</span> (<span class="ot">t ::</span> (<span class="fu">*</span> <span class="ot">-&gt;</span> <span class="fu">*</span>) <span class="ot">-&gt;</span> <span class="fu">*</span> <span class="ot">-&gt;</span> <span class="fu">*</span>) <span class="kw">where</span>
-<span class="ot">    lift ::</span> <span class="dt">Monad</span> (<span class="ot">m ::</span> <span class="fu">*</span>) <span class="ot">=&gt;</span> forall (<span class="ot">a ::</span> <span class="fu">*</span>)<span class="fu">.</span>m a <span class="ot">-&gt;</span> t m a</code></pre></li>
+<span class="ot">    lift ::</span> <span class="dt">Monad</span> (<span class="ot">m ::</span> <span class="fu">*</span> <span class="ot">-&gt;</span> <span class="fu">*</span>) <span class="ot">=&gt;</span> forall (<span class="ot">a ::</span> <span class="fu">*</span>)<span class="fu">.</span>m a <span class="ot">-&gt;</span> t m a</code></pre></li>
 </ul>
 <p>NB spacje są niezbędne - <code>::*-&gt;*</code> jest jednym leksemem.</p>
 <h1 id="klasy-wieloparametrowe">Klasy wieloparametrowe</h1>
