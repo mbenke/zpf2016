@@ -285,7 +285,7 @@ nothing <span class="fu">=</span> <span class="dt">Result</span>{ ok <span class
 
 <span class="kw">newtype</span> <span class="dt">Property</span>
   <span class="fu">=</span> <span class="dt">Prop</span> (<span class="dt">Gen</span> <span class="dt">Result</span>)</code></pre>
-<p>Własność to generator wyników</p>
+<p>Własność (<code>Property</code>), to obliczenie w monadzie <code>Gen</code> dające <code>Result</code></p>
 <h1 id="testable">Testable</h1>
 <p>Aby coś przetestować musimy bmieć dla tego generator wyników:</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> <span class="dt">Testable</span> a <span class="kw">where</span>

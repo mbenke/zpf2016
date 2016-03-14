@@ -363,7 +363,7 @@ newtype Property
   = Prop (Gen Result)
 ~~~~
 
-Własność to generator wyników
+Własność (`Property`),  to obliczenie w monadzie `Gen` dające `Result`
 
 # Testable
 
