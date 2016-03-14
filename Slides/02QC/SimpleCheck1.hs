@@ -50,7 +50,7 @@ chooseInt :: (Int,Int) -> Gen Int
 chooseInt bounds = (fst . randomR bounds) `fmap` rand
 
 choose ::  Random a => (a, a) -> Gen a
-choose bounds = (fst . randomR bounds) `fmap` rand
+choose bounds = (fst . randomR bounds) <$> rand
 
 elements :: [a] -> Gen a
 elements xs = (xs !!) `fmap` choose (0, length xs - 1)
