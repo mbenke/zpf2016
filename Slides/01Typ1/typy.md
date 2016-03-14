@@ -448,7 +448,7 @@ newtype IdentityT m a = IdentityT { runIdentityT :: m a }
 
     ~~~~ {.haskell}
     class MonadTrans (t :: (* -> *) -> * -> *) where
-        lift :: Monad (m :: *) => forall (a :: *).m a -> t m a
+        lift :: Monad (m :: * -> *) => forall (a :: *).m a -> t m a
     ~~~~
 
 NB spacje są niezbędne - `::*->*` jest jednym leksemem.
