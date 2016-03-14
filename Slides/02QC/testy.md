@@ -609,7 +609,7 @@ prop_insert3 x xs = collect (length xs) $  ordered xs ==> ordered (insert x xs)
 * Trzeba zdefiniować nowy typ (chyba, że już mamy)
 
 ~~~~
-data OrderedInts = OrderedInts [Int]
+newtype OrderedInts = OrderedInts [Int]
 
 prop_insert4 :: Int -> OrderedInts -> Bool
 prop_insert4  x (OrderedInts xs) = ordered (insert x xs)
