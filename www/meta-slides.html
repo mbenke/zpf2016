@@ -52,6 +52,21 @@ Marcin Benke
 <li><p>Code/TH/QQ</p></li>
 </ul>
 </div>
+<div id="problem-wieloliniowe-napisy" class="slide section level1">
+<h1>Problem: wieloliniowe napisy</h1>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">showClass ::</span> [<span class="dt">Method</span>] <span class="ot">-&gt;</span> <span class="dt">String</span>
+showClass ms <span class="fu">=</span> <span class="st">&quot;\</span>
+<span class="st">\.class  public Instant\n\</span>
+<span class="st">\.super  java/lang/Object\n\</span>
+<span class="st">\\n\</span>
+<span class="st">\;\n\</span>
+<span class="st">\; standard initializer\n\</span>
+<span class="st">\.method public &lt;init&gt;()V\n\</span>
+<span class="st">\   aload_0\n\</span>
+<span class="st">\   invokespecial java/lang/Object/&lt;init&gt;()V\n\</span>
+<span class="st">\   return\n\</span>
+<span class="st">\.end method\n&quot;</span> <span class="fu">++</span> unlines (map showMethod ms)</code></pre>
+</div>
 <div id="template-haskell" class="slide section level1">
 <h1>Template Haskell</h1>
 <p>Wieloliniowe napisy w Haskellu wg Haskell Wiki:</p>
@@ -155,6 +170,9 @@ main <span class="fu">=</span> <span class="kw">do</span>
   decs <span class="ot">&lt;-</span> runQ build_p1
   pprLn decs
   print <span class="fu">$</span> p1(<span class="dv">1</span>,<span class="dv">2</span>)</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> <span class="dt">Monad</span> m <span class="ot">=&gt;</span> <span class="dt">Quasi</span> m <span class="kw">where</span> <span class="fu">...</span>
+<span class="kw">instance</span> <span class="dt">Quasi</span> <span class="dt">IO</span> <span class="kw">where</span> <span class="fu">...</span>
+<span class="ot">runQ ::</span> <span class="dt">Quasi</span> m <span class="ot">=&gt;</span> <span class="dt">Q</span> a <span class="ot">-&gt;</span> m a</code></pre>
 </div>
 <div id="nowe-nazwy" class="slide section level1">
 <h1>Nowe nazwy</h1>
@@ -231,7 +249,7 @@ build_ps <span class="fu">=</span> mapM build_p [<span class="dv">1</span>,<span
 <span class="kw">import </span><span class="dt">Language.Haskell.TH</span>
 
 <span class="kw">import </span><span class="dt">Build3</span>
-<span class="fu">$</span>(build_ps)
+build_ps <span class="co">-- dla deklaracji $(...) jest zbędne</span>
 
 main <span class="fu">=</span> mapM_ print
     [ p2_1 (<span class="dv">1</span>,<span class="dv">2</span>)
@@ -276,10 +294,10 @@ main <span class="fu">=</span> print test1</code></pre>
 <h1>Testowanie</h1>
 <p>Now let's say we need some expresion trees in our program. For this kind of expressions we could (almost) get by with <code>class Num</code> hack:</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">instance</span> <span class="dt">Num</span> <span class="dt">Exp</span> <span class="kw">where</span>
-    fromInteger <span class="fu">=</span> <span class="dt">EInt</span> <span class="fu">.</span> fromInteger
-        (<span class="fu">+</span>) <span class="fu">=</span> <span class="dt">EAdd</span>
-        (<span class="fu">*</span>) <span class="fu">=</span> <span class="dt">EMul</span>
-            (<span class="fu">-</span>) <span class="fu">=</span> <span class="dt">ESub</span>
+  fromInteger <span class="fu">=</span> <span class="dt">EInt</span> <span class="fu">.</span> fromInteger
+  (<span class="fu">+</span>) <span class="fu">=</span> <span class="dt">EAdd</span>
+  (<span class="fu">*</span>) <span class="fu">=</span> <span class="dt">EMul</span>
+  (<span class="fu">-</span>) <span class="fu">=</span> <span class="dt">ESub</span>
 
 <span class="ot">testExp ::</span> <span class="dt">Exp</span>
 testExp <span class="fu">=</span> (<span class="dv">2</span> <span class="fu">+</span> <span class="dv">2</span>) <span class="fu">*</span> <span class="dv">3</span></code></pre>

@@ -12,6 +12,7 @@ $(build_ps 8)
 
 main = print $ p8_4 (1,2,3,4,5,6,7,8)  
 ```
+
 should print 4.
 
 Write a function `tupleFromList` such that

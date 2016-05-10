@@ -16,6 +16,24 @@ Interaktywne tutoriale na  [School of Haskell](https://www.schoolofhaskell.com/)
 
 * Code/TH/QQ
 
+# Problem: wieloliniowe napisy
+
+
+``` {.haskell}
+showClass :: [Method] -> String
+showClass ms = "\
+\.class  public Instant\n\
+\.super  java/lang/Object\n\
+\\n\
+\;\n\
+\; standard initializer\n\
+\.method public <init>()V\n\
+\   aload_0\n\
+\   invokespecial java/lang/Object/<init>()V\n\
+\   return\n\
+\.end method\n" ++ unlines (map showMethod ms)
+```
+
 # Template Haskell
 
 Wieloliniowe napisy w Haskellu wg  Haskell Wiki:
@@ -146,6 +164,11 @@ main = do
   print $ p1(1,2)
 ```
 
+``` {.haskell }
+class Monad m => Quasi m where ...
+instance Quasi IO where ...
+runQ :: Quasi m => Q a -> m a
+```
 
 # Nowe nazwy
 
@@ -160,7 +183,7 @@ newName :: String -> Q Name
 
 (co przy okazji wyjasnia jeden z powodów, dla których [Q](http://hackage.haskell.org/packages/archive/template-haskell/2.9.0.0/doc/html/Language-Haskell-TH.html#t:Q) jest monadą.)
 
-Przy użyciu`newName` możemy uodpornić nasz przyklad na konflikty nazw. Zauważmy jednak, że `p1` jest globalne i musi nadal używać `mkName`, natomiast `a` i `b` mogą być dowolnymi nazwami, więc wygenerujemy je przy użyciu `newName`.
+Przy użyciu `newName` możemy uodpornić nasz przyklad na konflikty nazw. Zauważmy jednak, że `p1` jest globalne i musi nadal używać `mkName`, natomiast `a` i `b` mogą być dowolnymi nazwami, więc wygenerujemy je przy użyciu `newName`.
 
 # Build2
 
