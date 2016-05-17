@@ -121,18 +121,18 @@ force x <span class="fu">=</span> deepseq x x
 *** Exception: Prelude.undefined</code></pre>
 <h1 id="a-parallel-program">A parallel program</h1>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import </span><span class="dt">Control.Parallel.Strategies</span>  <span class="co">-- cabal install parallel</span>
+<span class="ot">main ::</span> <span class="dt">IO</span> ()
 main <span class="fu">=</span> <span class="kw">do</span>
     [f] <span class="ot">&lt;-</span> getArgs
     grids <span class="ot">&lt;-</span> fmap lines <span class="fu">$</span> readFile f
-
+    <span class="co">-- print (length (filter isJust (map solve grids)))</span>
     <span class="kw">let</span> (as,bs) <span class="fu">=</span> splitAt (length grids <span class="ot">`div`</span> <span class="dv">2</span>) grids
+    print (length (runEval (work as bs)))
 
-    evaluate <span class="fu">$</span> runEval <span class="fu">$</span> <span class="kw">do</span>
+work as bs <span class="fu">=</span>  <span class="kw">do</span>
        a <span class="ot">&lt;-</span> rpar (force (map solve as))
        b <span class="ot">&lt;-</span> rpar (force (map solve bs))
-       rseq a
-       rseq b
-       return ()</code></pre>
+       return (filter isJust (a<span class="fu">++</span>b))</code></pre>
 <p>We create two light threads, in GHC called ``sparks'' (these are not OS threads).</p>
 <h1 id="results">Results</h1>
 <pre><code>$ ghc -O2 -rtsopts -threaded --make sudoku2.hs

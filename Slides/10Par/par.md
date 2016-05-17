@@ -144,18 +144,18 @@ evaluate :: a -> IO a
 
 ~~~~ {.haskell}
 import Control.Parallel.Strategies  -- cabal install parallel
+main :: IO ()
 main = do
     [f] <- getArgs
     grids <- fmap lines $ readFile f
-
+    -- print (length (filter isJust (map solve grids)))
     let (as,bs) = splitAt (length grids `div` 2) grids
+    print (length (runEval (work as bs)))
 
-    evaluate $ runEval $ do
+work as bs =  do
        a <- rpar (force (map solve as))
        b <- rpar (force (map solve bs))
-       rseq a
-       rseq b
-       return ()
+       return (filter isJust (a++b))
 ~~~~
 
 We create two light threads, in GHC called ``sparks'' (these are not OS threads).
