@@ -1,6 +1,6 @@
 % Advanced Functional Programming
 % Marcin Benke
-% May 7, 2013
+% May 31, 2016
 
 # Parallelism and concurrency
 
