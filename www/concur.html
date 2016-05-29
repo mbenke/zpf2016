@@ -56,7 +56,8 @@ BABABABABABABABABABABABABABABABABABABABABABBBBBBBBBBBB</code></pre>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">MVar</span> a
 <span class="ot">newMVar  ::</span> a <span class="ot">-&gt;</span> <span class="dt">IO</span> (<span class="dt">MVar</span> a)
 <span class="ot">takeMVar ::</span>  <span class="dt">MVar</span> a <span class="ot">-&gt;</span> <span class="dt">IO</span> a 
-<span class="ot">putMVar  ::</span> <span class="dt">MVar</span> a <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">IO</span> ()</code></pre>
+<span class="ot">putMVar  ::</span> <span class="dt">MVar</span> a <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">IO</span> ()
+<span class="ot">readMVar ::</span> <span class="dt">MVar</span> a <span class="ot">-&gt;</span> <span class="dt">IO</span> a  <span class="co">--  Atomic read</span></code></pre>
 <p><code>stdout</code> is guarded by an MVar, hence A and B in the previous example come more or less evenly.</p>
 <h1 id="asynchronous-io">Asynchronous I/O</h1>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import </span><span class="dt">GetURL</span>(getURL)

@@ -50,6 +50,7 @@ data MVar a
 newMVar  :: a -> IO (MVar a)
 takeMVar ::  MVar a -> IO a 
 putMVar  :: MVar a -> a -> IO ()
+readMVar :: MVar a -> IO a  --  Atomic read
 ~~~~
 
 `stdout` is guarded by an MVar, hence A and B in the previous example come more or less evenly.
