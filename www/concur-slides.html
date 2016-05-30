@@ -72,6 +72,8 @@ BABABABABABABABABABABABABABABABABABABABABABBBBBBBBBBBB</code></pre>
 <span class="ot">putMVar  ::</span> <span class="dt">MVar</span> a <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">IO</span> ()
 <span class="ot">readMVar ::</span> <span class="dt">MVar</span> a <span class="ot">-&gt;</span> <span class="dt">IO</span> a  <span class="co">--  Atomic read</span></code></pre>
 <p><code>stdout</code> is guarded by an MVar, hence A and B in the previous example come more or less evenly.</p>
+<p><code>takeMVar</code> wakes one thread</p>
+<p><code>readMVar</code> wakes all threads waiting on this <code>MVar</code></p>
 </div>
 <div id="asynchronous-io" class="slide section level1">
 <h1>Asynchronous I/O</h1>
@@ -132,7 +134,7 @@ sites <span class="fu">=</span> [<span class="st">&quot;http://www.google.com&qu
          <span class="st">&quot;http://www.wikipedia.com/wiki/Spade&quot;</span>,
          <span class="st">&quot;http://www.wikipedia.com/wiki/Shovel&quot;</span>]
 
-main <span class="fu">=</span> mapM (async<span class="fu">.</span>http) sites <span class="fu">&gt;&gt;=</span> mapM wait
+main <span class="fu">=</span> mapM (async<span class="fu">.</span>http) sites <span class="fu">&gt;&gt;=</span> mapM_ wait
  <span class="kw">where</span>
    http url <span class="fu">=</span> <span class="kw">do</span>
      (page, time) <span class="ot">&lt;-</span> timeit <span class="fu">$</span> getURL url
@@ -143,7 +145,9 @@ downloaded: http://haskell.org (21921 bytes, 0.012s)
 downloaded: http://www.wikipedia.com/wiki/Spade (69631 bytes, 0.012s)
 downloaded: http://www.wikipedia.com/wiki/Shovel (82803 bytes, 0.012s)
 downloaded: http://www.yahoo.com (79788 bytes, 0.020s)</code></pre>
-<p>Why are results in different order than queries? <code>mapM</code> is sequential?</p>
+<!-- Why are results in different order than queries? `mapM` is sequential? -->
+
+
 </div>
 <div id="ioref" class="slide section level1">
 <h1>IORef</h1>

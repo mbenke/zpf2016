@@ -53,7 +53,12 @@ putMVar  :: MVar a -> a -> IO ()
 readMVar :: MVar a -> IO a  --  Atomic read
 ~~~~
 
-`stdout` is guarded by an MVar, hence A and B in the previous example come more or less evenly.
+`stdout` is guarded by an MVar, hence A and B in the previous example
+come more or less evenly.
+
+`takeMVar` wakes one thread
+
+`readMVar` wakes all threads waiting on this `MVar`
 
 # Asynchronous I/O
 
@@ -123,7 +128,7 @@ sites = ["http://www.google.com",
          "http://www.wikipedia.com/wiki/Spade",
          "http://www.wikipedia.com/wiki/Shovel"]
 
-main = mapM (async.http) sites >>= mapM wait
+main = mapM (async.http) sites >>= mapM_ wait
  where
    http url = do
      (page, time) <- timeit $ getURL url
@@ -139,7 +144,7 @@ downloaded: http://www.wikipedia.com/wiki/Shovel (82803 bytes, 0.012s)
 downloaded: http://www.yahoo.com (79788 bytes, 0.020s)
 ~~~~
 
-Why are results in different order than queries? `mapM` is sequential?
+<!-- Why are results in different order than queries? `mapM` is sequential? -->
 
 
 # IORef
@@ -310,7 +315,6 @@ else { to.lock(); from.lock(); }
 * not enough locks
 
 * wrong locks - the connection between a lock and data it protects is not always clear
-które chroni nie zawsze jest jasne
 
 * too many locks - deadlock, starvation
 
