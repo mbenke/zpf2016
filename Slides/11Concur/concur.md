@@ -340,7 +340,7 @@ transfer from to amount = atomically $ do
 
 Two problems
 
-* one we have seen alreadt: no isolation guarantee
+* one we have seen already: no isolation guarantee
 
 * killing concurrency (I called the global lock `gil` on purpose)
 
@@ -408,19 +408,25 @@ main = do
   mapM forkIO $ replicate 20 (incRef px)
   delay (30*baseDelay) `seq` return ()
   atomically (readTVar px) >>= print
-  
-baseDelay :: Integer  
-baseDelay = 10^7
-
-delay :: Integer -> Integer
-delay 0 = 0
-delay n = delay $! n-1
 ~~~~
 
 ```
 ./stm1 +RTS -N2
 20
 ```
+
+# Delay
+
+```  
+baseDelay :: Integer  
+baseDelay = 10^7
+
+delay :: Integer -> Integer
+delay 0 = 0
+delay n = delay $! n-1
+
+```
+See also 'Control.Concurrent.STM.Delay'
 
 # Exercise
 

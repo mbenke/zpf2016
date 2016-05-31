@@ -240,7 +240,7 @@ else { to.lock(); from.lock(); }</code></pre>
 <h1 id="problems-with-locking">Problems with locking</h1>
 <ul>
 <li><p>not enough locks</p></li>
-<li><p>wrong locks - the connection between a lock and data it protects is not always clear które chroni nie zawsze jest jasne</p></li>
+<li><p>wrong locks - the connection between a lock and data it protects is not always clear</p></li>
 <li><p>too many locks - deadlock, starvation</p></li>
 <li><p>taking locks in a wrong order</p></li>
 </ul>
@@ -258,7 +258,7 @@ transfer from to amount = atomically $ do
 <h1 id="gil">GIL?</h1>
 <p>Two problems</p>
 <ul>
-<li><p>one we have seen alreadt: no isolation guarantee</p></li>
+<li><p>one we have seen already: no isolation guarantee</p></li>
 <li><p>killing concurrency (I called the global lock <code>gil</code> on purpose)</p></li>
 </ul>
 <p>The first problem can be solved using types:</p>
@@ -304,16 +304,18 @@ main <span class="fu">=</span> <span class="kw">do</span>
   px <span class="ot">&lt;-</span> newTVarIO <span class="dv">0</span>
   mapM forkIO <span class="fu">$</span> replicate <span class="dv">20</span> (incRef px)
   delay (<span class="dv">30</span><span class="fu">*</span>baseDelay) <span class="ot">`seq`</span> return ()
-  atomically (readTVar px) <span class="fu">&gt;&gt;=</span> print
-  
-<span class="ot">baseDelay ::</span> <span class="dt">Integer</span>  
-baseDelay <span class="fu">=</span> <span class="dv">10</span><span class="fu">^</span><span class="dv">7</span>
-
-<span class="ot">delay ::</span> <span class="dt">Integer</span> <span class="ot">-&gt;</span> <span class="dt">Integer</span>
-delay <span class="dv">0</span> <span class="fu">=</span> <span class="dv">0</span>
-delay n <span class="fu">=</span> delay <span class="fu">$!</span> n<span class="fu">-</span><span class="dv">1</span></code></pre>
+  atomically (readTVar px) <span class="fu">&gt;&gt;=</span> print</code></pre>
 <pre><code>./stm1 +RTS -N2
 20</code></pre>
+<h1 id="delay">Delay</h1>
+<pre><code>baseDelay :: Integer  
+baseDelay = 10^7
+
+delay :: Integer -&gt; Integer
+delay 0 = 0
+delay n = delay $! n-1
+</code></pre>
+<p>See also 'Control.Concurrent.STM.Delay'</p>
 <h1 id="exercise">Exercise</h1>
 <p>Implement <code>withdraw</code>, <code>deposit</code> using STM</p>
 <h1 id="blocking-retry">Blocking: <code>retry</code></h1>
